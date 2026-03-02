@@ -19,7 +19,6 @@
       position: relative;
     }
 
-    /* ✅ รวม @supports ทั้ง 3 จุดเป็น block เดียว */
     @supports (min-height: 100dvh) {
       body { min-height: 100dvh; }
       .container { min-height: 100dvh; }
@@ -252,7 +251,6 @@
     }
     .footer-text { color: #66ccff; font-size: 1.2rem; opacity: 0.8; }
 
-    /* ✅ mobile-notice มีที่เดียว ไม่ซ้ำ */
     .mobile-notice {
       display: none;
       background: rgba(255,136,0,0.1); border: 2px solid rgba(255,136,0,0.3);
@@ -369,21 +367,18 @@
   </div>
 
   <script>
-    // ─── Global state ────────────────────────────────────────────────────────
     let currentDataType = '';
     let currentYear     = null;
     let navigationHistory = ['homeView'];
 
-    // ─── Helpers ─────────────────────────────────────────────────────────────
     function isMobile() {
       return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
-    // ✅ ลบ TH_TO_IDX ออก — ไม่ได้ใช้งานเลย
     const IDX_TO_TH = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน',
                        'กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 
-    // ─── Data: Power Meter ───────────────────────────────────────────────────
+    // Data: Power Meter 
     const powerMeterData = {
       '2025': {
         icon: '📅', title: '2025',
@@ -403,7 +398,12 @@
         months: {
           'มกราคม':    { description: 'ข้อมูลเดือนมกราคม<br>พร้อมให้ดาวน์โหลด',    fileSize: '~2.5 MB', url: 'https://docs.google.com/spreadsheets/d/1K-LhquT_dPktlOUhEOF8kYtinRmd3lZy/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', exportUrl: 'https://docs.google.com/spreadsheets/d/1K-LhquT_dPktlOUhEOF8kYtinRmd3lZy/export?format=xlsx', available: true },
           'กุมภาพันธ์':{ description: 'ข้อมูลเดือนกุมภาพันธ์<br>พร้อมให้ดาวน์โหลด', fileSize: '~2.3 MB', url: 'https://docs.google.com/spreadsheets/d/1_cj79Q13rt22TuEXv6ZDey4JwDCGQjkj/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', exportUrl: 'https://docs.google.com/spreadsheets/d/1K-LhquT_dPktlOUhEOF8kYtinRmd3lZy/export?format=xlsx', available: true },
-          'มีนาคม':    { description: 'ข้อมูลเดือนมีนาคม<br>พร้อมให้ดาวน์โหลด',    fileSize: '~2.6 MB', url: 'https://docs.google.com/spreadsheets/d/1Qn55VCVpP3B-ffDUJf_zieCsbANF5VRL/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', exportUrl: 'https://docs.google.com/spreadsheets/d/1Qn55VCVpP3B-ffDUJf_zieCsbANF5VRL/export?format=xlsx', available: true },
+          'มีนาคม':    { 
+            description: 'ข้อมูลเดือนมีนาคม<br>พร้อมให้ดาวน์โหลด',    
+            fileSize: '~2.6 MB', 
+            url: 'https://docs.google.com/spreadsheets/d/1Qn55VCVpP3B-ffDUJf_zieCsbANF5VRL/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1Qn55VCVpP3B-ffDUJf_zieCsbANF5VRL/export?format=xlsx', 
+            available: true },
           'เมษายน':    { description: 'ข้อมูลเดือนเมษายน<br>กำลังเตรียมข้อมูล',    fileSize: '~2.7 MB', url: '', exportUrl: '', available: false },
           'พฤษภาคม':  { description: 'ข้อมูลเดือนพฤษภาคม<br>กำลังเตรียมข้อมูล',  fileSize: '~2.8 MB', url: '', exportUrl: '', available: false },
           'มิถุนายน':  { description: 'ข้อมูลเดือนมิถุนายน<br>กำลังเตรียมข้อมูล',  fileSize: '~2.9 MB', url: '', exportUrl: '', available: false },
@@ -421,8 +421,7 @@
       }
     };
 
-    // ─── Data: Scrap ──────────────────────────────────────────────────────────
-    // ✅ ลบ icon field ออกจาก month ทุกตัว — ไม่ได้ใช้ใน generateMonthCards()
+    // Data: Scrap 
     const scrapData = {
       '2025': {
         icon: '♻️', title: '2025',
@@ -458,8 +457,7 @@
       }
     };
 
-    // ─── Data: Air Compressor ────────────────────────────────────────────────
-    // ✅ ลบ icon field ออกจาก month ทุกตัว — ไม่ได้ใช้ใน generateMonthCards()
+    //Data: Air Compressor 
     const airCompData = {
       '2025': {
         icon: '💨', title: '2025',
@@ -497,7 +495,7 @@
       }
     };
 
-    // ─── Auto-enable current month ───────────────────────────────────────────
+    //Auto-enable current month 
     function autoEnableCurrentMonth() {
       const now  = new Date();
       const y    = String(now.getFullYear());
@@ -515,7 +513,7 @@
       });
     }
 
-    // ─── Routing helpers ─────────────────────────────────────────────────────
+    // Routing helpers 
     function getCurrentData() {
       if (currentDataType === 'scrap')         return scrapData;
       if (currentDataType === 'aircompressor') return airCompData;
@@ -525,7 +523,6 @@
     function navigateTo(viewId) {
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       document.getElementById(viewId).classList.add('active');
-      // ✅ แก้ navigation history — push ทุกครั้ง ไม่ check duplicate
       navigationHistory.push(viewId);
       updateBreadcrumb(viewId);
     }
@@ -587,7 +584,7 @@
       generateYearCards();
     }
 
-    // ─── Card generators ──────────────────────────────────────────────────────
+    // Card generators
     function generateYearCards() {
       const grid = document.getElementById('yearGrid');
       grid.innerHTML = '';
@@ -658,7 +655,7 @@
       generateMonthCards(year);
     }
 
-    // ─── Download ─────────────────────────────────────────────────────────────
+    // Download
     function downloadFile(ev, year, month) {
       const monthData = getCurrentData()[year]?.months[month];
       if (!monthData?.available || !monthData.url) return;
@@ -703,7 +700,7 @@
       }, 80);
     }
 
-    // ─── Particles ────────────────────────────────────────────────────────────
+    // Particles
     function createParticle() {
       const p = document.createElement('div');
       p.className = 'particle';
@@ -714,7 +711,7 @@
       setTimeout(() => p.remove(), 8000);
     }
 
-    // ─── Init ─────────────────────────────────────────────────────────────────
+    // Init 
     document.addEventListener('DOMContentLoaded', () => {
       autoEnableCurrentMonth();
       for (let i = 0; i < 6; i++) createParticle();
